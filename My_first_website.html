@@ -1,0 +1,520 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>秦始皇</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    body {
+      margin: 0;
+      padding: 20px;
+      background-color: rgb(222, 243, 33);
+      color: #111;
+      font-family: Arial, "Microsoft JhengHei", sans-serif;
+    }
+
+    /* 最上方標題靠左 */
+    .title {
+      margin: 0 0 30px;
+      padding: 15px 20px;
+      
+      font-size: clamp(28px, 5vw, 60px);
+      color: white;
+      border: 3px solid red;
+      border-radius: 16px;
+      overflow-wrap: anywhere;
+    }
+
+    /* 主要內容置中 */
+    .page {
+      width: 100%;
+      max-width: 950px;
+      margin: 0 auto;
+    }
+
+    /* 圖片與介紹 */
+    .content {
+      display: flex;
+      align-items: flex-start;
+      gap: 30px;
+    }
+
+    .photo {
+      display: block;
+      width: 250px;
+      max-width: 100%;
+      height: auto;
+      flex-shrink: 0;
+      border: 3px solid white;
+      border-radius: 12px;
+    }
+
+    .description {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .description h2 {
+      margin: 0 0 20px;
+      font-size: clamp(26px, 4vw, 38px);
+    }
+
+    .description p {
+      font-size: clamp(18px, 2.5vw, 24px);
+      line-height: 1.6;
+    }
+
+    /* 四個連結 */
+    .links {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 15px;
+      margin-top: 25px;
+    }
+
+    .links a {
+      display: block;
+      padding: 16px;
+      color: white;
+      text-align: center;
+      text-decoration: none;
+      font-size: 22px;
+      border-radius: 10px;
+      overflow-wrap: anywhere;
+      transition: transform 0.2s;
+    }
+
+    .links a:hover {
+      transform: translateY(-3px);
+    }
+
+    .link-blue {
+      background-color: #2563eb;
+    }
+
+    .link-red {
+      background-color: #dc2626;
+    }
+
+    .link-green {
+      background-color: #16a34a;
+    }
+
+    .link-purple {
+      background-color: #7c3aed;
+    }
+
+    a:focus-visible,
+    button:focus-visible {
+      outline: 3px solid #111;
+      outline-offset: 4px;
+    }
+
+    /* 圖表入口 */
+    .chart-entry {
+      margin-top: 30px;
+      text-align: center;
+    }
+
+    /* 切換畫面按鈕 */
+    .switch-button {
+      max-width: 100%;
+      padding: 14px 24px;
+      border: none;
+      border-radius: 10px;
+      background-color: #2563eb;
+      color: white;
+      font: inherit;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .switch-button:hover {
+      background-color: #1d4ed8;
+    }
+
+    /* 獨立卡片 */
+    .section-card {
+      margin-top: 35px;
+      padding: 25px;
+      background-color: white;
+      border: 1px solid #ddd;
+      border-radius: 16px;
+    }
+
+    .section-card h2 {
+      margin: 0 0 12px;
+      font-size: 30px;
+    }
+
+    .section-note {
+      margin: 0 0 20px;
+      color: #555;
+      line-height: 1.6;
+    }
+
+    /* 影片封面連結 */
+    .video-link {
+      display: block;
+      max-width: 640px;
+      margin: 0 auto;
+      overflow: hidden;
+      color: #111;
+      text-decoration: none;
+      background-color: #f3f4f6;
+      border-radius: 12px;
+    }
+
+    .video-cover {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      background-color: #222;
+    }
+
+    .video-cover img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.2s;
+    }
+
+    .video-link:hover img {
+      transform: scale(1.03);
+    }
+
+    .play-button {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 12px 24px;
+      color: white;
+      background-color: rgba(220, 38, 38, 0.9);
+      border-radius: 14px;
+      font-size: 32px;
+      pointer-events: none;
+    }
+
+    .video-caption {
+      padding: 16px;
+      font-size: 20px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    /* 圖表 */
+    .chart-container {
+      position: relative;
+      width: 100%;
+      height: 340px;
+    }
+
+    /* 手機版 */
+    @media (max-width: 650px) {
+      body {
+        padding: 12px;
+      }
+
+      .title {
+        padding: 12px;
+        margin-bottom: 25px;
+      }
+
+      .content {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .description {
+        width: 100%;
+      }
+
+      .links {
+        gap: 10px;
+      }
+
+      .links a {
+        padding: 14px 10px;
+        font-size: 18px;
+      }
+
+      .section-card {
+        margin-top: 25px;
+        padding: 16px;
+      }
+
+      .section-card h2 {
+        font-size: 25px;
+      }
+
+      .video-caption {
+        font-size: 18px;
+      }
+
+      .chart-container {
+        height: 300px;
+      }
+
+      .switch-button {
+        font-size: 18px;
+      }
+    }
+
+    /* 更窄的螢幕 */
+    @media (max-width: 380px) {
+      .links {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1 class="title">秦始皇騎北極熊</h1>
+  </header>
+
+  <!-- 主畫面 -->
+  <main class="page" id="homeScreen">
+    <section class="content" aria-labelledby="intro-title">
+      <img
+        class="photo"
+        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROIfeWrtztRL1fcxoNhYKLX_00noQwCoWS0KM3TUEQcA&s=10"
+        alt="秦始皇騎北極熊"
+      >
+
+      <div class="description">
+        <h2 id="intro-title">秦始皇騎北極熊</h2>
+
+        <p>傳說中，秦始皇正在北極探險。</p>
+        <p>他騎著北極熊，準備統一冰雪世界。</p>
+
+        <nav class="links" aria-label="相關連結">
+          <a
+            class="link-blue"
+            href="https://www.youtube.com/watch?v=jOr7VkHphhU&t=1544s"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            神秘連結
+          </a>
+
+          <a
+            class="link-red"
+            href="https://w970311w-ux.github.io/AAA/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            同學1號
+          </a>
+
+          <a
+            class="link-green"
+            href="https://ron0531.github.io/HIHI/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            同學2號
+          </a>
+
+          <a
+            class="link-purple"
+            href="https://hdxor.github.io/"
+          >
+            同學3號
+          </a>
+        </nav>
+      </div>
+    </section>
+
+    <!-- 點擊後切換到圖表畫面 -->
+    <div class="chart-entry">
+      <button
+        type="button"
+        class="switch-button"
+        id="showChartButton"
+      >
+        查看戰力圖表
+      </button>
+    </div>
+
+    <!-- 影片封面 -->
+    <section class="section-card" aria-labelledby="video-title">
+      <h2 id="video-title">影片推薦</h2>
+
+      <p class="section-note">
+        點擊下方封面，在新分頁開啟 YouTube 影片。
+      </p>
+
+      <a
+        class="video-link"
+        href="https://www.youtube.com/watch?v=jOr7VkHphhU&t=1544s"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <div class="video-cover">
+          <img
+            src="https://i.ytimg.com/vi/jOr7VkHphhU/hqdefault.jpg"
+            alt="神秘影片封面"
+            loading="lazy"
+          >
+
+          <span class="play-button" aria-hidden="true">▶</span>
+        </div>
+
+        <div class="video-caption">
+          觀看神秘影片 ↗
+        </div>
+      </a>
+    </section>
+  </main>
+
+  <!-- 圖表畫面：預設隱藏 -->
+  <main class="page" id="chartScreen" hidden>
+    <button
+      type="button"
+      class="switch-button"
+      id="backButton"
+    >
+      ← 返回主畫面
+    </button>
+
+    <section class="section-card" aria-labelledby="chart-title">
+      <h2 id="chart-title" tabindex="-1">秦始皇戰力值</h2>
+
+      <p class="section-note">
+        超級戰力表：以下數值為趣味設定。
+      </p>
+
+      <div class="chart-container">
+        <canvas
+          id="powerChart"
+          role="img"
+          aria-label="秦始皇戰力：攻擊20、防禦10、速度100、多會騎北極熊150"
+        >
+          攻擊：20；防禦：10；速度：100；多會騎北極熊：150。
+        </canvas>
+      </div>
+
+      <p id="chartError" class="section-note" hidden>
+        圖表套件載入失敗，請確認網路連線後重新整理。
+      </p>
+    </section>
+  </main>
+
+  <!-- 載入 Chart.js，需要網路連線 -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script>
+    const homeScreen = document.getElementById("homeScreen");
+    const chartScreen = document.getElementById("chartScreen");
+    const showChartButton = document.getElementById("showChartButton");
+    const backButton = document.getElementById("backButton");
+    const chartTitle = document.getElementById("chart-title");
+    const chartError = document.getElementById("chartError");
+
+    let powerChart = null;
+    let homeScrollPosition = 0;
+
+    // 開啟圖表畫面
+    showChartButton.addEventListener("click", function () {
+      homeScrollPosition = window.scrollY;
+
+      homeScreen.hidden = true;
+      chartScreen.hidden = false;
+
+      window.scrollTo(0, 0);
+      chartTitle.focus({ preventScroll: true });
+
+      // 等圖表畫面顯示後，再建立或調整圖表
+      requestAnimationFrame(function () {
+        if (chartScreen.hidden) {
+          return;
+        }
+
+        if (typeof Chart === "undefined") {
+          chartError.hidden = false;
+          return;
+        }
+
+        if (powerChart) {
+          powerChart.resize();
+          return;
+        }
+
+        powerChart = new Chart(
+          document.getElementById("powerChart"),
+          {
+            type: "bar",
+
+            data: {
+              labels: ["攻擊", "防禦", "速度", "多會騎北極熊"],
+
+              datasets: [{
+                label: "戰力",
+                data: [20, 10, 100, 150],
+                backgroundColor: [
+                  "#2563eb",
+                  "#dc2626",
+                  "#16a34a",
+                  "#7c3aed"
+                ],
+                borderRadius: 8
+              }]
+            },
+
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+
+              plugins: {
+                legend: {
+                  display: false
+                }
+              },
+
+              scales: {
+                y: {
+                  beginAtZero: true,
+
+                  title: {
+                    display: true,
+                    text: "戰力值"
+                  },
+
+                  ticks: {
+                    precision: 0
+                  }
+                }
+              }
+            }
+          }
+        );
+      });
+    });
+
+    // 返回主畫面
+    backButton.addEventListener("click", function () {
+      chartScreen.hidden = true;
+      homeScreen.hidden = false;
+
+      showChartButton.focus({ preventScroll: true });
+      window.scrollTo(0, homeScrollPosition);
+    });
+  </script>
+</body>
+</html>
+```
